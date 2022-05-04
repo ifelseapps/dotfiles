@@ -1,5 +1,6 @@
 set number
 set foldcolumn=2
+set termguicolors
 
 call plug#begin()
 Plug 'arcticicestudio/nord-vim'
@@ -12,11 +13,17 @@ Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'release', 'for': ['ts']} 
 Plug 'airblade/vim-gitgutter'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-fugitive'
+Plug 'easymotion/vim-easymotion'
+Plug 'preservim/nerdcommenter'
+Plug 'chun-yang/auto-pairs'
+Plug 'docunext/closetag.vim'
 call plug#end()
+
+filetype plugin on
 
 colorscheme nord
 
@@ -29,9 +36,7 @@ let $FZF_DEFAULT_OPTS    = '--reverse'
 let $FZF_DEFAULT_COMMAND = "rg --files --hidden --glob '!.git/**'"
 " Ctrl + f
 nnoremap <silent> <C-f> :Files<CR>
-
-" NerdTree
-" Ctrl + t
+" NerdTree " Ctrl + t
 nnoremap <C-t> :NERDTreeToggle<CR>
 
 " COC
