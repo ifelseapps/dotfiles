@@ -13,7 +13,7 @@ Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
-Plug 'neoclide/coc.nvim', {'branch': 'release', 'for': ['ts']} 
+Plug 'neoclide/coc.nvim', {'branch': 'release', 'for': ['typescript', 'typescriptreact']} 
 Plug 'airblade/vim-gitgutter'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-fugitive'
@@ -21,6 +21,9 @@ Plug 'easymotion/vim-easymotion'
 Plug 'preservim/nerdcommenter'
 Plug 'chun-yang/auto-pairs'
 Plug 'docunext/closetag.vim'
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install --frozen-lockfile --production',
+  \ 'for': ['javascript', 'typescript', 'typescriptreact', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'svelte', 'yaml', 'html'] }
 call plug#end()
 
 filetype plugin on
@@ -51,3 +54,6 @@ if isdirectory('./node_modules') && isdirectory('./node_modules/eslint')
 endif
 nnoremap <silent> K :call CocAction('doHover')<CR>
 
+" Prettier
+let g:prettier#autoformat = 0
+autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
