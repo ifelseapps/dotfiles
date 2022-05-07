@@ -1,6 +1,9 @@
 set number
 set foldcolumn=2
 set termguicolors
+set noswapfile
+set hlsearch
+syntax on
 
 call plug#begin()
 Plug 'arcticicestudio/nord-vim'
@@ -30,6 +33,13 @@ call plug#end()
 filetype plugin on
 
 colorscheme nord
+hi Visual cterm=none ctermbg=darkgrey ctermfg=cyan
+hi Search guibg=LightBlue
+
+" Cursor settings
+let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
 :set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
 :set list
@@ -57,4 +67,4 @@ nnoremap <silent> K :call CocAction('doHover')<CR>
 
 " Prettier
 let g:prettier#autoformat = 0
-autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.html,*.liquid PrettierAsync
+autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.html PrettierAsync
