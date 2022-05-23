@@ -1,13 +1,14 @@
 set number
+set relativenumber
 set cursorline
 set foldcolumn=2
-set termguicolors
 set noswapfile
 set hlsearch
 set encoding=UTF-8
 syntax on
 
 call plug#begin()
+Plug 'yassinebridi/vim-purpura'
 Plug 'arcticicestudio/nord-vim'
 Plug 'vim-airline/vim-airline'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " File search
@@ -32,13 +33,21 @@ Plug 'prettier/vim-prettier', {
 Plug 'tpope/vim-liquid'
 Plug 'ryanoasis/vim-devicons'
 Plug 'mattn/emmet-vim'
+Plug 'maxmellon/vim-jsx-pretty'
 call plug#end()
 
 filetype plugin on
 
-colorscheme nord
+colorscheme purpura 
+let g:airline_theme = 'purpura'
 hi Visual cterm=none ctermbg=darkgrey ctermfg=cyan
 hi Search guibg=LightBlue
+
+if has('termguicolors') && $TERM_PROGRAM ==# 'iTerm.app'
+  set t_8f=^[[38;2;%lu;%lu;%lum
+  set t_8b=^[[48;2;%lu;%lu;%lum
+  set termguicolors
+endif
 
 " Cursor settings
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
@@ -60,8 +69,19 @@ let $FZF_DEFAULT_OPTS    = '--reverse'
 let $FZF_DEFAULT_COMMAND = "rg --files --hidden --glob '!.git/**'"
 " Ctrl + f
 nnoremap <silent> <C-f> :Files<CR>
-" NerdTree " Ctrl + t
-nnoremap <C-t> :NERDTreeToggle<CR>
+
+" map nerdtree to the ctrl+\
+function! NerdTreeToggleFind()
+    if exists("g:NERDTree") && g:NERDTree.IsOpen()
+        NERDTreeClose
+    elseif filereadable(expand('%'))
+        NERDTreeFind
+    else
+        NERDTree
+    endif
+endfunction
+nnoremap <C-\> :call NerdTreeToggleFind()<CR>
+
 
 " COC
 let g:coc_global_extensions = [
