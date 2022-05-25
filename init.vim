@@ -1,11 +1,27 @@
 set number
 set relativenumber
-set cursorline
+" set cursorline
 set foldcolumn=2
+set updatetime=250
+set incsearch
+set nobackup
+set nowb
 set noswapfile
 set hlsearch
 set encoding=UTF-8
 syntax on
+set nowrap
+set scrolloff=8
+set numberwidth=3
+
+" Restore last position
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
+" Remove sounds
+set noerrorbells
+set novisualbell
+set t_vb=
+set tm=500
 
 call plug#begin()
 Plug 'yassinebridi/vim-purpura'
@@ -39,9 +55,21 @@ call plug#end()
 filetype plugin on
 
 colorscheme purpura 
+set background=dark
 let g:airline_theme = 'purpura'
-hi Visual cterm=none ctermbg=darkgrey ctermfg=cyan
+" hi Visual cterm=none ctermbg=darkgrey ctermfg=cyan
 hi Search guibg=LightBlue
+highlight! link SignColumn LineNr
+autocmd vimenter * hi Normal guibg=NONE ctermbg=NONE
+autocmd vimenter * hi EndOfBuffer guibg=NONE ctermbg=NONE
+autocmd vimenter * hi LineNr guibg=NONE ctermbg=NONE guifg=DarkMagenta
+autocmd vimenter * hi FoldColumn guibg=NONE ctermbg=NONE
+autocmd vimenter * hi SignColumn guibg=NONE ctermbg=NONE
+autocmd vimenter * hi GitGutterAdd guibg=NONE ctermbg=NONE
+autocmd vimenter * hi GitGutterChange guibg=NONE ctermbg=NONE
+autocmd vimenter * hi GitGutterDelete guibg=NONE ctermbg=NONE
+autocmd vimenter * hi Directory guibg=NONE ctermbg=NONE
+
 
 if has('termguicolors') && $TERM_PROGRAM ==# 'iTerm.app'
   set t_8f=^[[38;2;%lu;%lu;%lum
@@ -56,6 +84,8 @@ let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
 :set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
 :set list
+hi SpecialKey ctermbg=NONE guibg=NONE
+hi NonText ctermbg=NONE guibg=NONE
 
 " Disable arrows
 nnoremap <Left> :echoe "Use h"<CR>
@@ -81,7 +111,7 @@ function! NerdTreeToggleFind()
     endif
 endfunction
 nnoremap <C-\> :call NerdTreeToggleFind()<CR>
-
+let NERDTreeShowHidden=1
 
 " COC
 let g:coc_global_extensions = [
@@ -99,3 +129,8 @@ nnoremap <silent> K :call CocAction('doHover')<CR>
 let g:prettier#autoformat = 0
 autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.html PrettierAsync
 
+" Window navigation
+nmap <silent> <c-k> :wincmd k<CR>
+nmap <silent> <c-j> :wincmd j<CR>
+nmap <silent> <c-h> :wincmd h<CR>
+nmap <silent> <c-l> :wincmd l<CR>
