@@ -11,8 +11,10 @@ set hlsearch
 set encoding=UTF-8
 syntax on
 set nowrap
+set wrapmargin=0
 set scrolloff=8
 set numberwidth=3
+let mapleader = " "
 
 " Restore last position
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
@@ -69,6 +71,7 @@ autocmd vimenter * hi GitGutterAdd guibg=NONE ctermbg=NONE
 autocmd vimenter * hi GitGutterChange guibg=NONE ctermbg=NONE
 autocmd vimenter * hi GitGutterDelete guibg=NONE ctermbg=NONE
 autocmd vimenter * hi Directory guibg=NONE ctermbg=NONE
+highlight ColorColumn ctermbg=NONE guibg=NONE
 
 
 if has('termguicolors') && $TERM_PROGRAM ==# 'iTerm.app'
@@ -93,12 +96,19 @@ nnoremap <Right> :echoe "Use l"<CR>
 nnoremap <Up> :echoe "Use k"<CR>
 nnoremap <Down> :echoe "Use j"<CR>
 
+" Moving lines
+nnoremap <S-j> :m .+1<CR>==
+nnoremap <S-k> :m .-2<CR>==
+vnoremap <S-j> :m '>+1<CR>gv=gv
+vnoremap <S-k> :m '<-2<CR>gv=gv
+
 " FZF options
 " Предварительно установить https://github.com/BurntSushi/ripgrep
 let $FZF_DEFAULT_OPTS    = '--reverse'
 let $FZF_DEFAULT_COMMAND = "rg --files --hidden --glob '!.git/**'"
-" Ctrl + f
-nnoremap <silent> <C-f> :Files<CR>
+map <Leader>ff :Files<CR>
+map <Leader>fb :BLines<CR>
+map <Leader>fa :Rg<CR>
 
 " map nerdtree to the ctrl+\
 function! NerdTreeToggleFind()
@@ -124,6 +134,12 @@ if isdirectory('./node_modules') && isdirectory('./node_modules/eslint')
   let g:coc_global_extensions += ['coc-eslint']
 endif
 nnoremap <silent> K :call CocAction('doHover')<CR>
+nmap <leader>ac  <Plug>(coc-codeaction)
+nmap <leader>qf  <Plug>(coc-fix-current)
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
 " Prettier
 let g:prettier#autoformat = 0
