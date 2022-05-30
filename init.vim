@@ -52,6 +52,7 @@ Plug 'tpope/vim-liquid'
 Plug 'ryanoasis/vim-devicons'
 Plug 'mattn/emmet-vim'
 Plug 'maxmellon/vim-jsx-pretty'
+Plug 'jlanzarotta/bufexplorer'
 call plug#end()
 
 filetype plugin on
@@ -72,6 +73,8 @@ autocmd vimenter * hi GitGutterChange guibg=NONE ctermbg=NONE
 autocmd vimenter * hi GitGutterDelete guibg=NONE ctermbg=NONE
 autocmd vimenter * hi Directory guibg=NONE ctermbg=NONE
 highlight ColorColumn ctermbg=NONE guibg=NONE
+set fillchars+=vert:│
+hi VertSplit ctermbg=NONE guibg=NONE
 
 
 if has('termguicolors') && $TERM_PROGRAM ==# 'iTerm.app'
@@ -120,7 +123,7 @@ function! NerdTreeToggleFind()
         NERDTree
     endif
 endfunction
-nnoremap <C-\> :call NerdTreeToggleFind()<CR>
+nnoremap <Leader>nn :call NerdTreeToggleFind()<CR>
 let NERDTreeShowHidden=1
 
 " COC
