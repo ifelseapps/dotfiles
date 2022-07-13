@@ -34,10 +34,11 @@ Plug 'junegunn/fzf.vim' " File search
 Plug 'preservim/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'pangloss/vim-javascript'
+Plug 'sheerun/vim-polyglot'
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
-Plug 'neoclide/coc.nvim', {'branch': 'release', 'for': ['typescript', 'typescriptreact']} 
+Plug 'neoclide/coc.nvim', {'branch': 'release'} 
 Plug 'airblade/vim-gitgutter'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-fugitive'
@@ -53,6 +54,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'mattn/emmet-vim'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'jlanzarotta/bufexplorer'
+Plug 'tpope/vim-surround'
 call plug#end()
 
 filetype plugin on
@@ -61,7 +63,7 @@ colorscheme purpura
 set background=dark
 let g:airline_theme = 'purpura'
 " hi Visual cterm=none ctermbg=darkgrey ctermfg=cyan
-hi Search guibg=LightBlue
+"hi Search guibg=LightBlue
 highlight! link SignColumn LineNr
 autocmd vimenter * hi Normal guibg=NONE ctermbg=NONE
 autocmd vimenter * hi EndOfBuffer guibg=NONE ctermbg=NONE
@@ -76,6 +78,8 @@ highlight ColorColumn ctermbg=NONE guibg=NONE
 set fillchars+=vert:│
 hi VertSplit ctermbg=NONE guibg=NONE
 
+autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
+autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
 
 if has('termguicolors') && $TERM_PROGRAM ==# 'iTerm.app'
   set t_8f=^[[38;2;%lu;%lu;%lum
@@ -128,10 +132,11 @@ let NERDTreeShowHidden=1
 
 " COC
 let g:coc_global_extensions = [
-  \ 'coc-tsserver'
+  \ 'coc-tsserver',
+  \ 'coc-pyright'
   \ ]
 if isdirectory('./node_modules') && isdirectory('./node_modules/prettier')
-  let g:coc_global_extensions += ['coc-prettier']
+  "let g:coc_global_extensions += ['coc-prettier']
 endif
 if isdirectory('./node_modules') && isdirectory('./node_modules/eslint')
   let g:coc_global_extensions += ['coc-eslint']
@@ -146,7 +151,11 @@ nmap <silent> gr <Plug>(coc-references)
 
 " Prettier
 let g:prettier#autoformat = 0
-autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.html PrettierAsync
+"autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.html PrettierAsync
+
+" NerdCommenter
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
 
 " Window navigation
 nmap <silent> <c-k> :wincmd k<CR>
