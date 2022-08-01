@@ -87,6 +87,9 @@ if has('termguicolors') && $TERM_PROGRAM ==# 'iTerm.app'
   set termguicolors
 endif
 
+" Turn off search highlights
+nnoremap ,<space> :nohlsearch<CR>
+
 " Cursor settings
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_SR = "\<Esc>]50;CursorShape=2\x7"
